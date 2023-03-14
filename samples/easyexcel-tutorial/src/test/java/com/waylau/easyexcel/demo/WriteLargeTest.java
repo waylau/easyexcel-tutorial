@@ -8,7 +8,6 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.waylau.easyexcel.demo.data.LargeData;
-import com.waylau.easyexcel.demo.data.LargeData2;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.junit.jupiter.api.Test;
@@ -73,7 +72,7 @@ public class WriteLargeTest {
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
 
         // 测试100w数据
-        excelWriter.write(data(1_000_000), writeSheet);
+        excelWriter.write(data(10_000_000), writeSheet);
 
         long endTime = System.currentTimeMillis();
         LOGGER.info("const time: {}", endTime - startTime);
@@ -120,63 +119,13 @@ public class WriteLargeTest {
         WriteSheet writeSheet = EasyExcel.writerSheet().build();
 
         // 测试100w数据
-        excelWriter.write(data(1_000_000), writeSheet);
+        excelWriter.write(data(10_000_000), writeSheet);
 
         long endTime = System.currentTimeMillis();
         LOGGER.info("const time: {}", endTime - startTime);
 
         excelWriter.finish();
 
-    }
-
-
-    /**
-     * 同一对象写到不同的sheet；
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testForOnClassMutiSheet() throws Exception {
-        // 方法2 如果写到不同的sheet 同一个对象
-        String fileName = FILE_DIR + "large" + System.currentTimeMillis() + ".xlsx";
-
-        ExcelWriter excelWriter = EasyExcel.write(fileName, LargeData.class).build();
-
-        for (int j = 0; j < SHEET_COUNT; j++) {
-            WriteSheet writeSheet = EasyExcel.writerSheet().build();
-            writeSheet.setSheetNo(j);
-            writeSheet.setSheetName("test" + j);
-            excelWriter.write(data(ROW_COUNT), writeSheet);
-            LOGGER.info("{} fill success.", j);
-        }
-        excelWriter.finish();
-    }
-
-    /**
-     * 不同对象写到不同的sheet；
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testForMutiClassMutiSheet() throws Exception {
-        // 方法2 如果写到不同的sheet 同一个对象
-        String fileName = FILE_DIR + "large" + System.currentTimeMillis() + ".xlsx";
-        ExcelWriter excelWriter = EasyExcel.write(fileName).build();
-
-        WriteSheet writeSheet;
-        for (int i = 0; i < SHEET_COUNT; i++) {
-            // 使用了不同对象LargeData、LargeData2
-            if (i % 2 == 0) {
-                writeSheet = EasyExcel.writerSheet(i, "模板" + i).head(LargeData2.class).build();
-                excelWriter.write(data(ROW_COUNT), writeSheet);
-            } else {
-                writeSheet = EasyExcel.writerSheet(i, "模板" + i).head(LargeData.class).build();
-                excelWriter.write(data(ROW_COUNT), writeSheet);
-            }
-
-            LOGGER.info("{} fill success.", i);
-        }
-        excelWriter.finish();
     }
 
     private List<List<String>> data(int count) {

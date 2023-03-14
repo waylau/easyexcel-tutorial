@@ -1,4 +1,4 @@
-package com.waylau.easyexcel.demo.data;
+package com.waylau.easyexcel.demo.bean;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
@@ -19,6 +19,9 @@ import java.util.Date;
 
 /**
  * 带样式的数据对象
+ *
+ * @author <a href="https://waylau.com">Way Lau</a>
+ * @since 2023-03-08
  */
 
 @Data

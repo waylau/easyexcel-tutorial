@@ -1,13 +1,18 @@
 package com.waylau.easyexcel.demo;
 
+
 import com.waylau.easyexcel.demo.data.LargeData;
 import com.waylau.easyexcel.demo.data.StyleData;
 import com.waylau.easyexcel.demo.util.TestDataGenerator;
 import com.waylau.easyexcel.export.*;
 import com.waylau.easyexcel.util.IdUtil;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -17,19 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * 导出任务执行器 Test
- *
- * @author <a href="https://waylau.com">Way Lau</a>
- * @since 2023-03-08
- */
-public class ExportExcutorTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExportExcutorTest.class);
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {SpringDemoApplication.class})
+public class SpringDemoApplicationTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringDemoApplicationTest.class);
+
+    @Autowired
+    private IExportExcutor exportExcutor;
 
     @Test
     public void testForSubmit() throws IOException {
-        ExportExecutorProperties exportExecutorProperties = new ExportExecutorProperties();
-        ExportExcutor exportExcutor = new ExportExcutor(exportExecutorProperties);
         List<CompletableFuture<ExportResult>> resultList = new ArrayList<>();
         List<String> taskList = new ArrayList<>();
 
@@ -95,9 +97,6 @@ public class ExportExcutorTest {
         // 不停，便于观察日志
         while (!finish.join()) {
         }
-
-        // 关闭执行器
-        exportExcutor.close();
     }
 
 }

@@ -8,11 +8,6 @@ import com.alibaba.excel.annotation.write.style.ContentStyle;
 import com.alibaba.excel.annotation.write.style.HeadFontStyle;
 import com.alibaba.excel.annotation.write.style.HeadStyle;
 import com.alibaba.excel.enums.poi.FillPatternTypeEnum;
-import com.waylau.easyexcel.export.BasicStyleSheet;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
@@ -20,7 +15,7 @@ import java.util.Date;
 /**
  * 带样式的数据对象
  */
-public class StyleData2 extends BasicStyleSheet {
+public class StyleData2 {
 
     @ExcelProperty("字符串")
     @HeadStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 14)

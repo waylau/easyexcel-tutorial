@@ -2,25 +2,41 @@ package com.waylau.easyexcel.export;
 
 import com.waylau.easyexcel.util.IdUtil;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 导出任务
+ *
+ * @author <a href="https://waylau.com">Way Lau</a>
+ * @since 2023-03-07
+ */
 @Getter
-@Setter
 public class ExportTask {
-    private String taskId = IdUtil.createID();
+    /**
+     * 任务ID。
+     * 会自动生成确保唯一
+     */
+    private String taskId = "ExportTask"+ IdUtil.createID();
 
-    // 报表的结构：对象->
-    private List<SheetParam> sheetParamList = new ArrayList<>();
+    /**
+     * 导出任务的数据
+     */
+    private List<ExportSheet> exportSheetList = new ArrayList<>();
 
     public ExportTask() {
 
     }
 
-    public ExportTask addSheet(SheetParam sheetParam) {
-        sheetParamList.add(sheetParam);
+    /**
+     * 添加Sheet。
+     * 一个导出任务会由多个Sheet组成。每个Sheet可以是不同的对象。
+     * @param exportSheet 定义Sheet的参数
+     * @return 导出任务
+     */
+    public ExportTask addSheet(ExportSheet exportSheet) {
+        exportSheetList.add(exportSheet);
         return this;
     }
 }

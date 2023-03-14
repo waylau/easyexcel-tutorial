@@ -4,12 +4,6 @@ import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
 import com.alibaba.excel.annotation.format.NumberFormat;
-import com.alibaba.excel.annotation.write.style.ContentFontStyle;
-import com.alibaba.excel.annotation.write.style.ContentStyle;
-import com.alibaba.excel.annotation.write.style.HeadFontStyle;
-import com.alibaba.excel.annotation.write.style.HeadStyle;
-import com.alibaba.excel.enums.poi.FillPatternTypeEnum;
-import com.waylau.easyexcel.export.BasicStyleSheet;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class MyBasicStyleSheet extends BasicStyleSheet {
+public class MyBasicStyleSheet {
 
     @ExcelProperty("字符串")
     private String string;
