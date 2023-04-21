@@ -77,6 +77,7 @@ public class ExportExcutor implements IExportExcutor {
                     for (ExportSheet<?> param : exportSheetList) {
 
                         String sheetName = param.getSheetName();
+                        ExportMergeStrategy exportMergeStrategy = param.getExportMergeStrategy();
                         Class clazz = param.getClazz();
 
                         // 记录进度
@@ -84,9 +85,21 @@ public class ExportExcutor implements IExportExcutor {
                         this.exportManager.appendStatus(exportProgress2);
 
                         // 使用了不同对象
-                        writeSheet = EasyExcel.writerSheet(i, sheetName)
-                                .head(clazz)
-                                .build();
+                        // 使用合并策略
+                        if (exportMergeStrategy != null) {
+                            writeSheet = EasyExcel.writerSheet(i, sheetName)
+                                    .head(clazz).registerWriteHandler(exportMergeStrategy).build();
+                        } else {
+                            writeSheet = EasyExcel.writerSheet(i, sheetName)
+                                    .head(clazz).build();
+                        }
+
+                        // 添加自定义的处理器
+                        /*if (customWriteHandlerList!=null && !customWriteHandlerList.isEmpty()) {
+                            writeSheet.setCustomWriteHandlerList(customWriteHandlerList);
+                        }*/
+
+                        // 开始写
                         excelWriter.write(param.getSheetData(), writeSheet);
 
                         i++;
@@ -116,7 +129,7 @@ public class ExportExcutor implements IExportExcutor {
                         result.setContent(ExportTaskStatusEnum.FAILED.toString() + e.getMessage());
                         result.setExportTaskStatus(ExportTaskStatusEnum.FAILED);
 
-                        LOGGER.error( taskId + " error: {}", e);
+                        LOGGER.error(taskId + " error: {}", e);
                     }
 
                     long endTime = System.currentTimeMillis();

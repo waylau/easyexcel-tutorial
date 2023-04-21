@@ -1,5 +1,6 @@
 package com.waylau.easyexcel.export;
 
+import com.alibaba.excel.write.handler.WriteHandler;
 import lombok.Getter;
 
 import java.util.List;
@@ -27,7 +28,12 @@ public class ExportSheet<T> {
      */
     List<T> sheetData;
 
-    private ExportSheet(){
+    /**
+     * 自定义处理器
+     */
+    List<WriteHandler> customWriteHandlerList;
+
+    private ExportSheet() {
         // 禁止用默认构造函数
     }
 
@@ -36,4 +42,12 @@ public class ExportSheet<T> {
         this.sheetName = sheetName;
         this.sheetData = sheetData;
     }
+
+    public ExportSheet(Class<T> clazz, String sheetName, List<T> sheetData, List<WriteHandler> customWriteHandlerList) {
+        this.clazz = clazz;
+        this.sheetName = sheetName;
+        this.sheetData = sheetData;
+        this.customWriteHandlerList = customWriteHandlerList;
+    }
+
 }

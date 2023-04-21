@@ -5,6 +5,7 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.waylau.easyexcel.demo.data.MergeData;
 import com.waylau.easyexcel.demo.util.TestDataGenerator;
+import com.waylau.easyexcel.export.ExportMergeStrategy;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +24,12 @@ public class ExportMergeStrategyTest {
     public void test() throws Exception {
 
         // 方法2 如果写到不同的sheet 同一个对象
-        String fileName = "d://large" + System.currentTimeMillis() + ".xlsx";
+        String fileName = "d://ExportMergeStrategy" + System.currentTimeMillis() + ".xlsx";
 
         List<?> data = TestDataGenerator.getMergeData();
 
         ExcelWriter excelWriter = EasyExcel.write(fileName, MergeData.class)
-                //.registerWriteHandler(new ExportMergeStrategy(data.size(),0,1,2,3))
+                .registerWriteHandler(new ExportMergeStrategy(data.size(),0,1,2,3))
                 .build();
 
         for (int j = 0; j < 2; j++) {
